@@ -49,9 +49,10 @@ OPTIONS
               restart        Reboots the specified Evernode nodes.
               status_echo    Retrieves status information from the specified Evernode nodes.
               status_reboot  Retrieves status information and initiates a reboot if 'inactive'.
-              status         Retrieves status information using Evernode's internal status command.
+              status         Retrieves full status information using Evernode's internal status command.
               config         Pushes configuration to /usr/bin/evernode config
-              push           Uploads the status check script to each node.
+              push           Uploads the status check script to each node. 
+                             (Run this for status_echo and status_reboot commands to work)
               ssh_key        Uploads your public ssh key to each node to perform ssh commands in this script.
 
        pattern
@@ -63,6 +64,10 @@ OPTIONS
               The filename of the script or configuration file to be pushed to the Evernode node(s).
 
 EXAMPLES
+
+       Push the check_status script to your nodes to run status_echo and status_reboot commands
+               $ ./interact.sh push all
+               $ ./interact.sh push host 02
 
        Push a configuration to all Evernode nodes using the evernode commands options & required arguments:
               $ ./interact.sh config all [resources|leaseamt|xahaud|xahaud-fallback|email|instance|extrafee] [arguments]
