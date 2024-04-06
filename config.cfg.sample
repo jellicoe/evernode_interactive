@@ -1,0 +1,6 @@
+MYHOSTNAME="yourhostsname"
+MYDOMAIN="yourdomain.com"
+NUMBER_OF_NODES="999"
+SSH_PRIVATE_KEY="/root/.ssh/id_rsa"
+SSH_PUBLIC_KEY="/root/.ssh/id_rsa.pub"
+USER="admin_account"
