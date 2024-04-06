@@ -1,6 +1,6 @@
-# ever_automation
+# evernode_interactive
 
-https://github.com/jellicoe/ever_automation
+https://github.com/jellicoe/evernode_interactive
 
 Evernode Interactive(1)                     User Commands                     Evernode Interactive(1)
 
