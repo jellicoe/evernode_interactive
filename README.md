@@ -11,7 +11,7 @@ NAME
 SYNOPSIS
 
        ./interact.sh {restart|status_echo|status_reboot|status|config|push} {all|host #}
-       ./interact.sh config [resources|leaseamt|xahaud|xahaud-fallback|email|instance|extrafee] [arguments]
+       ./interact.sh config {all|host #} [resources|leaseamt|xahaud|xahaud-fallback|email|instance|extrafee] [arguments]
 
 DESCRIPTION
 
