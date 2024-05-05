@@ -40,6 +40,7 @@ status)
 ;;
 
 list) 
+    echo "Instances running on node $hostie" 
     ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /usr/bin/evernode list"
 ;;
 
