@@ -50,6 +50,7 @@ OPTIONS
               status_echo    Retrieves status information from the specified Evernode nodes.
               status_reboot  Retrieves status information and initiates a reboot if 'inactive'.
               status         Retrieves full status information using Evernode's internal status command.
+              list           List active instances running on each node.
               config         Pushes configuration to /usr/bin/evernode config
               push           Uploads the status check script to each node. 
                              (Run this for status_echo and status_reboot commands to work)
