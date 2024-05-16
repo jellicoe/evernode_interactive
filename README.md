@@ -13,6 +13,8 @@ SYNOPSIS
        ./interact.sh {restart|status_echo|status_reboot|status|list|config|push} {all|host #}
        ./interact.sh config {all|host #} [resources|leaseamt|xahaud|xahaud-fallback|email|instance|extrafee] [arguments]
 
+       -NOTE: config resources not yet configured to set changes.
+
 DESCRIPTION
 
        ./interact.sh is a bash script designed to manage Evernode nodes remotely. It allows users
@@ -78,6 +80,12 @@ EXAMPLES
 
        Change node 07's xahaud-fallback server - note use of quotes 
               $ ./interact.sh config host 07 "xahaud-fallback ws://xahau01.yourdomain.io:16006"
+
+       Change node 20's Lease Amount to 0.0001
+              $ ./interact.sh config host 20 leaseamt 0.0001
+
+       Change all node's Lease Amount to 0.002 - note this will only change nodes not already set, as teh evernode command checks this
+              $ ./interact.sh config all leaseamt 0.002
 
        Retrieve status information from a specific Evernode node:
               $ ./interact.sh status_echo host 01

@@ -15,6 +15,12 @@ fi
 COMMAND=$1
 ALL_OR_HOST=$2
 
+#Resources
+MEMORY=$5
+SWAP=$6
+DISK=$7
+INSTANCES=$8
+
 do_ssh() {
 
 #from do_ssh args
@@ -45,7 +51,16 @@ list)
 ;;
 
 config) 
-    ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /usr/bin/evernode config $CONFIG_COMMANDS"
+    if test $CONFIG_COMMANDS != "resources"; then
+        echo "Issuing command: root@$hostie bash -s < /usr/bin/evernode config $CONFIG_COMMANDS $SET_CONFIG_COMMANDS"
+        ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /usr/bin/evernode config $CONFIG_COMMANDS $SET_CONFIG_COMMANDS"
+    else
+        echo "Resource re-allocation not configured YET"
+
+        echo "/usr/bin/evernode config resources <memory MB> <swap MB> <disk MB> <max instance count>"
+
+        echo "/usr/bin/evernode config $CONFIG_COMMANDS $MEMORY $SWAP $DISK $INSTANCES"
+    fi
 ;;
 
 push)
@@ -69,6 +84,15 @@ case $ALL_OR_HOST in
 
 all)
     CONFIG_COMMANDS=$3
+
+    if test -n $4; then
+        echo "4th Argument is $4"
+        SET_CONFIG_COMMANDS=$4 #this is the argument to varible to change to
+    else
+        echo "4th Argument is Empty!!"
+        SET_CONFIG_COMMANDS=""
+    fi
+
     for ((i=1; i<$NUMBER_OF_NODES+1; i++))
     do
         if (( i < 10 )); then
@@ -84,7 +108,16 @@ all)
 ;;
 
 host)
-    CONFIG_COMMANDS=$4
+    CONFIG_COMMANDS=$4 # this is the config option
+
+    if test -n $5; then
+        echo "5th Argument is $5"
+        SET_CONFIG_COMMANDS=$5 #this is the argument to varible to change to
+    else
+        echo "5th Argument is Empty!!"
+        SET_CONFIG_COMMANDS=""
+    fi
+
     #$3 is the HOSTS ID Number 01-20 from commandline ''./interact status host 01'
     MYHOST=$MYHOSTNAME$3.$MYDOMAIN
     do_ssh $MYHOST
