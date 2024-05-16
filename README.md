@@ -51,6 +51,7 @@ OPTIONS
               restart        Reboots the specified Evernode nodes.
               status_echo    Retrieves status information from the specified Evernode nodes.
               status_reboot  Retrieves status information and initiates a reboot if 'inactive'.
+              server_reboot  Checks your VPS Server OS /run/motd.dynamc file for "restart" command advise and reboots.
               status         Retrieves full status information using Evernode's internal status command.
               list           List active instances running on each node.
               config         Pushes configuration to /usr/bin/evernode config
@@ -75,6 +76,8 @@ EXAMPLES
        Push a configuration to all Evernode nodes using the evernode commands options & required arguments:
               $ ./interact.sh config all [resources|leaseamt|xahaud|xahaud-fallback|email|instance|extrafee] [arguments]
 
+              - note 'resources' not implemented yet.
+
        Check node 07's xahaud-fallback server
               $ ./interact.sh config host 07 xahaud-fallback
 
@@ -87,17 +90,22 @@ EXAMPLES
        Change all node's Lease Amount to 0.002 - note this will only change nodes not already set, as teh evernode command checks this
               $ ./interact.sh config all leaseamt 0.002
 
-       Retrieve status information from a specific Evernode node:
+       Retrieve status information from all or a specific Evernode node:
+              $ ./interact.sh status_echo all
               $ ./interact.sh status_echo host 01
 
+       Retrieve status information from all or a specific Evernode node, reboot if inactve:
+              $ ./interact.sh status_reboot all
+              $ ./interact.sh status_reboot host 01
+
        Reboot all Evernode nodes:
-              $ ./interact.sh restart all 
+              $ ./interact.sh restart all
+              $ ./interact.sh restart host 02 
 
-       Get the 'active' status of all Evernode nodes:
-              $ ./interact.sh status_echo all 
+       Reboot server if your VPS MOTD advises a restart in /run/motd.dynamic*
+              $ ./interact.sh server_reboot all
+              $ ./interact.sh server_reboot host 01
 
-       Get the 'active' status of a single Evernode node 12:
-              $ ./interact.sh status_echo host 12
 
 AUTHOR
 
