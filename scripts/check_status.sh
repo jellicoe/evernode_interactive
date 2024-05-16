@@ -25,6 +25,37 @@ if ! command -v evernode &> /dev/null; then
     exit 1
 fi
 
+
+#Check MOTD for Server Reboot
+#############################
+case $1 in
+    server_reboot)
+status=$(cat /run/motd.dynamic)
+host_status=$(echo "$status" | grep -o 'System restart [^ ]*' | cut -d' ' -f3)
+#echo "STATUS: $host_status"
+
+        #host_status=$(echo "$status" | grep -o 'Host status: [^ ]*' | cut -d' ' -f3)
+
+        # Check if the host status is "active"
+        if [[ "$host_status" == "required" ]]; then
+            #echo "*** System restart required ***"
+            log_message "System Reboot Required, rebooting $HOSTNAME !!!"  
+            #only get last line of log
+            tail -n $LINES "/var/log/evernode_status.log"
+            systemctl reboot
+            exit 1
+        else
+            log_message "No system reboot required for $HOSTNAME"
+            tail -n $LINES "/var/log/evernode_status.log"
+            exit 1
+        fi
+
+        
+        ;;
+esac
+
+## Evernode STATUS Checks
+#########################
 # Run the command to get the status and capture its output
 status=$(evernode status)
 

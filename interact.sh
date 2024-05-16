@@ -45,6 +45,11 @@ status)
     ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /usr/bin/evernode status"
 ;;
 
+server_reboot)
+    #checks if /run/motd.dynamic has the message to restart the server in it
+    ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /root/scripts/check_status.sh server_reboot"
+;;
+
 list) 
     echo "Instances running on node $hostie" 
     ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /usr/bin/evernode list"
@@ -55,6 +60,7 @@ config)
         echo "Issuing command: root@$hostie bash -s < /usr/bin/evernode config $CONFIG_COMMANDS $SET_CONFIG_COMMANDS"
         ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /usr/bin/evernode config $CONFIG_COMMANDS $SET_CONFIG_COMMANDS"
     else
+        #TODO: change resource allocation.
         echo "Resource re-allocation not configured YET"
 
         echo "/usr/bin/evernode config resources <memory MB> <swap MB> <disk MB> <max instance count>"
@@ -86,10 +92,10 @@ all)
     CONFIG_COMMANDS=$3
 
     if test -n $4; then
-        echo "4th Argument is $4"
+        #echo "4th Argument is $4"
         SET_CONFIG_COMMANDS=$4 #this is the argument to varible to change to
     else
-        echo "4th Argument is Empty!!"
+        #echo "4th Argument is Empty!!"
         SET_CONFIG_COMMANDS=""
     fi
 
@@ -111,10 +117,10 @@ host)
     CONFIG_COMMANDS=$4 # this is the config option
 
     if test -n $5; then
-        echo "5th Argument is $5"
+        #echo "5th Argument is $5"
         SET_CONFIG_COMMANDS=$5 #this is the argument to varible to change to
     else
-        echo "5th Argument is Empty!!"
+        #echo "5th Argument is Empty!!"
         SET_CONFIG_COMMANDS=""
     fi
 
@@ -123,5 +129,3 @@ host)
     do_ssh $MYHOST
 ;;
 esac
-
-
