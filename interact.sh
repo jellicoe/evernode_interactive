@@ -6,7 +6,7 @@ source config.cfg
 if [ $# -lt 2 ]
 then
         echo "Usage : $0 option pattern filename"
-        echo "Option: {restart|status_echo|status_reboot|status|config|push|ssh_key} {all|host #}"
+        echo "Option: {restart|status_echo|status_reboot|status|config|push|ssh_key|server_reboot} {all|host #}"
         echo "config [resources|leaseamt|xahaud|xahaud-fallback|email|instance|extrafee] [arguments]"
         exit
 fi
@@ -29,38 +29,52 @@ local hostie=$1
 case $COMMAND in
 
 restart)
+    #remotely restart server 
     echo "Restarting : $hostie";
     ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "shutdown -r now"
 ;;
 
 status_echo)
+    #Display te evernode status 'active' or 'inactive' but take no action
     ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /root/scripts/check_status.sh"
     ;;
 
 status_reboot)
+    #Reboot if evernode status is 'inactive'
     ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /root/scripts/check_status.sh reboot"
     ;;
 
-status) 
+status)
+    #Display the full 'evernode status' with QR code
     ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /usr/bin/evernode status"
 ;;
 
 server_reboot)
     #checks if /run/motd.dynamic has the message to restart the server in it
+    #TODO: check for other /run/<restart> files, varys from OS
     ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /root/scripts/check_status.sh server_reboot"
 ;;
 
+apt_upgrade)
+    #apt update && apt upgrade 
+    #note: sometimes cloud-init still requires manual intervention
+    echo "UPDATING!!!!!!!! : $hostie";
+    ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "apt update -y && apt upgrade -y && reboot"
+;;
+
 list) 
+    #List running instances on your nodes
     echo "Instances running on node $hostie" 
     ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /usr/bin/evernode list"
 ;;
 
 config) 
+    #Execute 'most' of teh 'evernode config' commands remotely
     if test $CONFIG_COMMANDS != "resources"; then
         echo "Issuing command: root@$hostie bash -s < /usr/bin/evernode config $CONFIG_COMMANDS $SET_CONFIG_COMMANDS"
         ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /usr/bin/evernode config $CONFIG_COMMANDS $SET_CONFIG_COMMANDS"
     else
-        #TODO: change resource allocation.
+        #TODO: change resource allocation one reputation contracts have been rolled out and we have an idea of changes
         echo "Resource re-allocation not configured YET"
 
         echo "/usr/bin/evernode config resources <memory MB> <swap MB> <disk MB> <max instance count>"

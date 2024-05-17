@@ -51,7 +51,7 @@ OPTIONS
               restart        Reboots the specified Evernode nodes.
               status_echo    Retrieves status information from the specified Evernode nodes.
               status_reboot  Retrieves status information and initiates a reboot if 'inactive'.
-              server_reboot  Checks your VPS Server OS /run/motd.dynamc file for "restart" command advise and reboots.
+              server_reboot  Checks your VPS Server OS /run/motd.dynamic file for "restart" command advise and reboots.
               status         Retrieves full status information using Evernode's internal status command.
               list           List active instances running on each node.
               config         Pushes configuration to /usr/bin/evernode config
