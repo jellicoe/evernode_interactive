@@ -6,7 +6,7 @@ source config.cfg
 if [ $# -lt 2 ]
 then
         echo "Usage : $0 option pattern filename"
-        echo "Option: {restart|status_echo|status_reboot|status|config|push|ssh_key|server_reboot} {all|host #}"
+        echo "Option: {list|restart|status_echo|status_reboot|status|config|push|ssh_key|server_reboot|apt_upgrade} {all|host #}"
         echo "config [resources|leaseamt|xahaud|xahaud-fallback|email|instance|extrafee] [arguments]"
         exit
 fi
