@@ -62,6 +62,11 @@ status=$(evernode status)
 # Extract the host status from the output
 host_status=$(echo "$status" | grep -o 'Host status: [^ ]*' | cut -d' ' -f3)
 
+host_lease=$(echo "$status" | grep -o 'Available Lease offers: [^ ]*' | cut -d' ' -f4)
+
+echo "Availible leases: $host_lease"
+
+
 # Check if the host status is "active"
 if [[ "$host_status" == "active" ]]; then
     log_message "Evernode $HOSTNAME is active. No action needed."

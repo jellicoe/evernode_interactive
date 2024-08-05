@@ -35,7 +35,7 @@ restart)
 ;;
 
 status_echo)
-    #Display te evernode status 'active' or 'inactive' but take no action
+    #Display the evernode status 'active' or 'inactive' but take no action
     ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /root/scripts/check_status.sh"
     ;;
 
