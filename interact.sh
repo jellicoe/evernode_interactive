@@ -6,7 +6,7 @@ source config.cfg
 if [ $# -lt 2 ]
 then
         echo "Usage : $0 option pattern filename"
-        echo "Option: {list|restart|status_echo|status_reboot|status|config|push|ssh_key|server_reboot|apt_upgrade} {all|host #}"
+        echo "Option: {list|restart|status_echo|status_reboot|status|config|push|ssh_key|server_reboot|apt_upgrade|release|offerlease} {all|host #}"
         echo "config [resources|leaseamt|xahaud|xahaud-fallback|email|instance|extrafee] [arguments]"
         exit
 fi
@@ -69,7 +69,7 @@ list)
 ;;
 
 config) 
-    #Execute 'most' of teh 'evernode config' commands remotely
+    #Execute 'most' of the 'evernode config' commands remotely
     if test $CONFIG_COMMANDS != "resources"; then
         echo "Issuing command: root@$hostie bash -s < /usr/bin/evernode config $CONFIG_COMMANDS $SET_CONFIG_COMMANDS"
         ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /usr/bin/evernode config $CONFIG_COMMANDS $SET_CONFIG_COMMANDS"
@@ -81,6 +81,18 @@ config)
 
         echo "/usr/bin/evernode config $CONFIG_COMMANDS $MEMORY $SWAP $DISK $INSTANCES"
     fi
+;;
+
+release) 
+    #Execute 'most' of the 'evernode config' commands remotely
+    echo "Issuing command: root@$hostie bash -s < /usr/bin/evernode config resources 0 0 0 3"
+    ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /usr/bin/evernode config resources 0 0 0 3"
+;;
+
+offerlease) 
+    #Execute 'most' of the 'evernode config' commands remotely
+    echo "Issuing command: root@$hostie bash -s < /usr/bin/evernode offerlease"
+    ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /usr/bin/evernode offerlease"
 ;;
 
 push)
