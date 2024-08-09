@@ -10,7 +10,7 @@ NAME
 
 SYNOPSIS
 
-       ./interact.sh {restart|status_echo|status_reboot|status|list|config|push} {all|host #}
+       ./interact.sh {list|restart|status_echo|status_reboot|status|config|push|ssh_key|server_reboot|apt_upgrade|release|offerlease} {all|host #}
        ./interact.sh config {all|host #} [resources|leaseamt|xahaud|xahaud-fallback|email|instance|extrafee] [arguments]
 
        -NOTE: config resources not yet configured to set changes.
@@ -54,6 +54,8 @@ OPTIONS
               server_reboot  Checks your VPS Server OS /run/motd.dynamic file for "restart" command advise and reboots.
               status         Retrieves full status information using Evernode's internal status command.
               list           List active instances running on each node.
+              release        Will do "config resources 0 0 0 3" if all leases are used and reputation is 0.
+              offerlease     Normal Offerlease command.
               config         Pushes configuration to /usr/bin/evernode config
               push           Uploads the status check script to each node. 
                              (Run this for status_echo and status_reboot commands to work)
