@@ -85,8 +85,9 @@ config)
 
 release) 
     #Execute 'most' of the 'evernode config' commands remotely
-    echo "Issuing command: root@$hostie bash -s < /usr/bin/evernode config resources 0 0 0 3"
-    ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /usr/bin/evernode config resources 0 0 0 3"
+    #echo "Issuing command: root@$hostie bash -s < /usr/bin/evernode config resources 0 0 0 3"
+    #ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /usr/bin/evernode config resources 0 0 0 3"
+    ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /root/scripts/check_status.sh release"
 ;;
 
 offerlease) 

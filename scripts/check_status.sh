@@ -66,8 +66,17 @@ host_lease=$(echo "$status" | grep -o 'Available Lease offers: [^ ]*' | cut -d' 
 
 echo "Availible leases: $host_lease"
 
+case $1 in 
+release)
+    if [[ "$host_lease" == "0" ]]; then
+        echo "resetting lease count !!!" 
+        /usr/bin/evernode config resources 0 0 0 3
+    fi
+    ;;
+esac
 
 # Check if the host status is "active"
+#status_echo
 if [[ "$host_status" == "active" ]]; then
     log_message "Evernode $HOSTNAME is active. No action needed."
 elif [[ "$host_status" == "inactive" ]]; then
