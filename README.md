@@ -48,18 +48,19 @@ OPTIONS
 
        option
               Specifies the action to perform. Valid options are:
-              restart        Reboots the specified Evernode nodes.
-              status_echo    Retrieves status information from the specified Evernode nodes.
-              status_reboot  Retrieves status information and initiates a reboot if 'inactive'.
-              server_reboot  Checks your VPS Server OS /run/motd.dynamic file for "restart" command advise and reboots.
-              status         Retrieves full status information using Evernode's internal status command.
-              list           List active instances running on each node.
-              release        Will do "config resources 0 0 0 3" if all leases are used and reputation is 0.
-              offerlease     Normal Offerlease command.
-              config         Pushes configuration to /usr/bin/evernode config
-              push           Uploads the status check script to each node. 
-                             (Run this for status_echo and status_reboot commands to work)
-              ssh_key        Uploads your public ssh key to each node to perform ssh commands in this script.
+              restart              Reboots the specified Evernode nodes.
+              status_echo          Retrieves status information from the specified Evernode nodes.
+              status_reboot        Retrieves status information and initiates a reboot if 'inactive'.
+              server_reboot        Checks your VPS Server OS /run/motd.dynamic file for "restart" command advise and reboots.
+              status               Retrieves full status information using Evernode's internal status command.
+              list                 List active instances running on each node.
+              release              Will do "config resources 0 0 0 3" if all leases are used and reputation is 0.
+              offerlease           Normal Offerlease command.
+              config               Pushes configuration to /usr/bin/evernode config
+              push                  Uploads the status check script to each node. 
+                                   (Run this for status_echo and status_reboot commands to work)
+              ssh_key              Uploads your public ssh key to each node to perform ssh commands in this script.
+              install_fail2ban     Install and run fail to ban script and set up systemctl service
 
        pattern
               Specifies the target Evernode node(s) to perform the action on. Can be either 'all' to

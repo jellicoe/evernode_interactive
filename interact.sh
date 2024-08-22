@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source config.cfg
+source /root/evernode_interactive/config.cfg
 
 # Check atleast 3 arguments are given #
 if [ $# -lt 2 ]
@@ -27,6 +27,13 @@ do_ssh() {
 local hostie=$1
 
 case $COMMAND in
+
+bash) 
+    #List running instances on your nodes
+    #echo "Sending bash command to $hostie :$CONFIG_COMMANDS:" 
+    echo "Issuing command: root@$hostie $CONFIG_COMMANDS $SET_CONFIG_COMMANDS"
+    ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "$CONFIG_COMMANDS"
+;;
 
 restart)
     #remotely restart server 
@@ -103,6 +110,14 @@ push)
     ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "mkdir /root/scripts"
     scp -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY ./scripts/*.sh root@$hostie:/root/scripts
 ;;
+
+install_fail2ban)
+    #checks if /run/motd.dynamic has the message to restart the server in it
+    #TODO: check for other /run/<restart> files, varys from OS
+    #ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "bash -s < /root/scripts/install_fail2ban.sh"
+    ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY root@$hostie "/root/scripts/install_fail2ban.sh"
+;;
+
 
 ssh_key)
     echo "uploading public key to node $hostie" 
